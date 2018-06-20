@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+ <meta charset="utf-8"/>
+ <title>Ornek</title>
+ <script src="jquery-3.3.1.min.js"></script>
+ <script type="text/javascript">
+  var ReportRight_UserNameArray = new Array();
+  var ReportRight_ReportRightIDArray = new Array();
+   	var ReportRight_ReportRightName = new Array();
+ function writeName(){
+ var welcomeMsg = $("#welcome");
+ var name1 = $("#name1");
+ var formContent = $("#entername");
+  
+ $.post("http://localhost:50667/api/weather/post",{location:"ankara", degree:name1[0].value},function (data,status)
+ {
+	welcomeMsg.innerHTML = data.location + ":" + data.degree; 
+	document.write("You have entered the degree as:" + " " + data.degree);
+ }
+ );
+ }
+  
+ function getUserReportRightResult(){
+		var welcomeMsg = $("#welcome");
+		var name2 = $("#name2");
+		var formContent = $("#entername");
+		
+		/*$.ajax({
+			url: "http://localhost:57034/api/GetUserReportRightResult", 
+			data: {UserName:name2[0].value},
+			type: 'get',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				alert('status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
+			},
+			success: function(data){}
+		});*/
+ 
+		$.get("http://localhost:57034/api/GetUserReportRightResult",{UserName:name2[0].value},function (data)
+		{
+				document.write("The user " + data[0].UserName +" has access to the following reports: ");
+				for(i = 0; i < data.length; i++)
+				{
+					
+					$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[i].ReportRightID},function (data)
+					{	
+						document.write(" " + data.ReportName + " ");
+					});
+				}	
+		});
+ }
+ 
+ function InsertUserReportRightResult(){
+ var welcomeMsg = $("#welcome");
+ var name3 = $("#name3");
+ var inptProduct = $("#inptProduct");
+ var name5 = $("#name5");
+ var formContent = $("#entername");
+ var obj = {username:name3[0].value};
+ 
+ 
+ $.post("http://localhost:57034/api/insertUserRight",{UserName:name3[0].value, ReportRightID:inptProduct[0].value, CreatedBy:name5[0].value},function (data, status)
+ {
+	
+	alert("The user has been successfully added to USERREPORTRIGHT list");
+ }
+ );
+ for(k = 0; k < 20; k++)
+				{
+ document.write("wtf      " + ReportRight_ReportRightName[k])
+ }
+ }
+ 
+ function showAllUserReportRights(){
+
+ var welcomeMsg = $("#welcome");
+ var name = $("#name");
+ var formContent = $("#entername");
+ document.write("All of the User Report Rights are shown below.");
+ 
+ $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
+		{
+		
+				
+				for(k = 0; k < data.length; k++)
+				{
+					
+					$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[k].ReportRightID},function (data)
+					{	
+						ReportRight_ReportRightName[k] = data.ReportName;
+						//document.write("awdadawdadadawd" + data.ReportName);
+					});
+				}
+			
+			
+		});
+ 
+ 
+
+ $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
+ {
+	
+	for(i = 0; i < data.length; i++){
+	
+	$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[i].ReportRightID},function (data)
+					{	
+						ReportRight_ReportRightName[k] = data.ReportName;
+					//	document.write("awdadawdadadawd" + data.ReportName);
+					});
+	
+	ReportRight_UserNameArray[i] = data[i].UserName;
+	ReportRight_ReportRightIDArray[i] = data[i].ReportRightID;
+	
+	//welcomeMsg = data[i].UserName + ":" + data[i].ReportRightID;
+	var node = document.createElement("LI");                 // Create a <li> node
+	var textnode = document.createTextNode("The user " + data[i].UserName +" has a report right with ReportRightID:" + " " + data[i].ReportRightID);         // Create a text node
+	node.appendChild(textnode);                              // Append the text to <li>
+	document.getElementById("textField").appendChild(node);}
+ }
+ );
+ }
+ 
+ /*function DeleteUserReportRight(){
+		var deleteReportRight = $("#deleteReportRight");
+		$.delete(URL ge
+		 
+		}
+
+ */
+ </script>
+ 
+</head>
+<body>
+<section>
+<p>  <script>
+showAllUserReportRights();
+
+</script> </p> 
+</section>
+<form id="entername">
+ Enter degree:<input type="text" id="name1"/><br/>
+ <input id="submitButton" type="button" value="Submit" onclick="writeName()"/>
+</form>
+<div id = "textField"/>
+<form id="get Weather with id">
+ Enter Username to see report Right:<input type="text" id="name2"/><br/>
+ <input id="submitButton" type="button" value="Submit" onclick="getUserReportRightResult()"/>
+</form>
+
+<form id="get Weather with id">
+ Create a new USER REPORT RIGHT: Username: <input type="text" id="name3"/> <form name="test">
+  <table>
+    <tr>
+      <td class='dataleft'>Select Report: </td>
+      <td><select id='inptProduct'></select></td>
+    </tr>
+  </table>
+</form> Created By: <input type="text" id="name5"/>  
+ <input id="submitButton" type="button" value="Submit" onclick="InsertUserReportRightResult()"/>
+</form>
+<br> </br>
+<table>
+    <tr>
+      <td class='dataleft'>Remove Report Right: </td>
+      <td><select id='deleteReportRight'></select></td>
+    </tr>
+  </table>
+  <input id="submitButton" type="button" value="Submit" onclick="DeleteUserReportRight()"/>
+
+
+
+
+
+<script> $.get("http://localhost:57034/api/GetReportRightResults",function (data)
+ { var optionsAsString = "";
+
+
+for(var i = 0; i < data.length; i++) {
+    optionsAsString += "<option value='" + data[i].Id + "'>" + data[i].ReportName +"</option>";
+}
+$( 'select[id="inptProduct"]' ).append( optionsAsString );
+}
+ );
+ 
+ /*var optionsAsString = "";
+for(var i = 0; i < ReportRight_ReportRightIDArray.length ; i++) {
+    optionsAsString += "<option value='" + ReportRight_ReportRightIDArray[i] + "'>" + ReportRight_UserNameArray[i] +"</option>";
+}
+$( 'select[id="deleteReportRight"]' ).append( optionsAsString );                   CALISMIYO FOR SOME REASON? */
+
+
+$.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
+ { var optionsAsString = "";
+
+
+for(var i = 0; i < data.length; i++) {
+    optionsAsString += "<option value='" + {id:data[i].ReportRightID,name:data[i].UserName} + "'>" + data[i].UserName + "  id:" + data[i].ReportRightID +"</option>";
+}
+$( 'select[id="deleteReportRight"]' ).append( optionsAsString );
+}
+ );
+ </script>
+ 
+
+ 
+</body>
+</html>
