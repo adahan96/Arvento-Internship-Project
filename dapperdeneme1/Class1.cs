@@ -16,7 +16,7 @@ namespace dapperdeneme1.Models
         public string CreatedBy { get; set; }
 
     }
-    public class UserReportRight
+    public class UserReportRight:IDisposable
     {
         public List<UserReportRightResult> GetUserReportRight(string userName)
         {
@@ -94,17 +94,17 @@ namespace dapperdeneme1.Models
             }
 
         }
-     /*   public void DeleteUserReportRight(string UserName, int ReportRightID) {
+          public void DeleteUserReportRight(string UserName, int ReportRightID, string deletedBy) {
             string connectionString = "SERVER=(local);UID=sa;PWD=Arvento1;DATABASE=ArmakomComms;Pooling=false";
             using (IDbConnection cn = new SqlConnection(connectionString))
             {
                 cn.Open();
                 Dictionary<string, object> parameters = new Dictionary<string, object>();
-                parameters.Add("@UserName", userName);
+                parameters.Add("@UserName", UserName);
                 parameters.Add("@RID", ReportRightID);
-                parameters.Add("@CBy", CreatedBy);
-                int ID = 
-                string strSql = "exec acInsertUserReportRight @Username = @UserName, @ReportID = @RID, @CreatedBy = @CBy;";
+                parameters.Add("@DBy", deletedBy);
+                
+                string strSql = "exec acDeleteUserReportRight @UserName = @UserName, @ReportRightID = @RID, @DeletedBy = @DBy;";
 
 
 
@@ -112,7 +112,10 @@ namespace dapperdeneme1.Models
 
             }
 
-        }*/
+        }
 
+        public void Dispose()
+        {
+        }
     }
 }
