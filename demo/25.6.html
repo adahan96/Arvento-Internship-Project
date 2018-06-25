@@ -133,8 +133,7 @@ var myData = { id:100, description:"some text"};
  }
  
  function showAllUserReportRights(){
- 
- 
+
  var welcomeMsg = $("#welcome");
  var name = $("#name");
  var formContent = $("#entername");
@@ -170,8 +169,6 @@ var myData = { id:100, description:"some text"};
 					//	document.write("awdadawdadadawd" + data.ReportName);
 					});
 	
-	
-	
 	ReportRight_UserNameArray[i] = data[i].UserName;
 	ReportRight_ReportRightIDArray[i] = data[i].ReportRightID;
 	
@@ -180,8 +177,6 @@ var myData = { id:100, description:"some text"};
 	var textnode = document.createTextNode("The user " + data[i].UserName +" has a report right with ReportRightID:" + " " + data[i].ReportRightID);         // Create a text node
 	node.appendChild(textnode);                              // Append the text to <li>
 	document.getElementById("textField").appendChild(node);}
-	
-	
  }
  );
  }
@@ -200,7 +195,7 @@ var myData = { id:100, description:"some text"};
 
 <p>All the current report rights are displayed below.</p>
 		<div class="row">
-			<table class="table">
+			<table id="tablo" class="table">
 				<thead>
 					<tr>
 						<th scope="col">#</th>
@@ -209,6 +204,20 @@ var myData = { id:100, description:"some text"};
 					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<th scope="r">1</th>
+						<td>Mark</td><td>2</td>
+					</tr>
+					<tr>
+						<th scope="row">2</th>
+						<td>Jacob</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<th scope="row">3</th>
+						<td>Larry</td>
+						<td>4</td>
+					</tr>
 				</tbody>
 			</table>								
 		</div>
@@ -242,24 +251,24 @@ showAllUserReportRights();
 </br>
 <form id="get Weather with id">
 <p><strong> Create a new User Report Right: </strong></p> Username: <input type="text" class ="form-control" placeholder="Username" id="name3"/> <form name="test"></p>
- table vardı
+  <table>
     <tr>
       <td class='dataleft'>Select Report: </td>
       <td><select class="form-control" id='inptProduct'></select></td>
     </tr>
- table vardı
+  </table>
 </form> Created By: <p><input type="text" class ="form-control" placeholder="Created By" id="name5"/></p>
  
  <button onclick ="InsertUserReportRightResult()" type="button" class="btn btn-primary">Create </button>
 </form>
 <hr>
 
-table vardı
+
     <tr>
       <td class='dataleft'> <strong> Remove Report Right from User: </strong> </td>
       <td><select class="form-control" id='deleteUserReportRightProduct'></select></td>
     </tr>
- table vardı
+
   </form> Deleted By:<p> <input type="text" class ="form-control" placeholder="Deleted By" id="name6"/> </p>
 <button onclick ="deleteUserReportRight()" type="button" class="btn btn-danger">Delete </button>  
  <hr>
@@ -328,8 +337,7 @@ $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 
   Trigger the handler
 </div>
- <script>
-	$('select[id="fam"]').on('change', function() {
+ <script>$('select[id="fam"]').on('change', function() {
  
 	this.value
 	var container = $('#cblist');
@@ -343,30 +351,28 @@ $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 		for(var i = 0; i < data.length; i++) {
 			optionsAsString += "<input type=" +  "checkbox " + "id='UserReportRightDeleteBox' " + "name='UserReportRightDelete'" +  "value=" + data[i].ReportRightID + ">" + data[i].UserName + "<br>";
 			}
-			container.append(optionsAsString);
+			 $("table id='tablo' tbody").append(optionsAsString);
 
 				
 		});
-}) 
-</script>
+ 
+
+}) </script>
 
 <script>  
-var container = $('#appendHere');
-var listElementsAsString = "";
 $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
-{ 
-	var optionsAsString = "";
-	for(var i = 0; i < data.length; i++) {
-		optionsAsString += "<option value='" + data[i].UserName + "'>" + data[i].UserName + "</option>";
-		listElementsAsString += "<tr><th scope='row'>" + i +"</th><td>" + data[i].UserName + "</td><td>" + data[i].ReportRightID + "</td></tr>";
+ { var optionsAsString = "";
+
+
+for(var i = 0; i < data.length; i++) {
+    optionsAsString += "<option value='" + data[i].UserName + "'>" + data[i].UserName + "</option>";
 }
 $( 'select[id="fam"]' ).append( optionsAsString );
-$("table tbody").append(listElementsAsString);
 }
  );
 
 </script>
- 
+
 
  
  
