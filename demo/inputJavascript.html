@@ -3,208 +3,159 @@
 <head>
 
 <meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
- <meta charset="utf-8"/>
- <title>Ornek</title>
- <script src="jquery-3.3.1.min.js"></script>
- <script type="text/javascript">
- 
- 
- 
- 
-  var ReportRight_UserNameArray = new Array();
-  var ReportRight_ReportRightIDArray = new Array();
-   	var ReportRight_ReportRightName = new Array();
+<meta charset="utf-8"/>
+<title>Ornek</title>
+<script src="jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    var reportNameHashMap = {};
+	var ReportRight_UserNameArray = [];
+	var ReportRight_ReportRightIDArray = new Array();
+    var ReportRight_ReportRightName = new Array();
 	
-function deleteUserReportRight(){
-var selectBoxProduct = $("#fam")
-var deleteProduct = $("#UserReportRightDeleteBox");
-var deletedBy = $("#name6");
-/*$.ajax({
-    url: 'http://localhost:57034/api/DeleteUserReportRightResult?UserName=adahan3&ReportRightID=22&DeletedBy=fam',                               // + $.param({"UserName": 'adahan3', "ReportRightID" : 22, "DeletedBy" : 'fam'})
-    type: 'DELETE',
-    success: function(result) {
-        // Do something with the result
+	function deleteUserReportRight(){
+	    var selectBoxProduct = $("#fam")
+		var deleteProduct = $("#UserReportRightDeleteBox");
+		var deletedBy = $("#name6");
+		var UserNameList = new Array();
+		var ReportRightIDList = new Array();
+		var deletedByList = new Array();
+		var array = new Array();
+		if (deletedBy[0].value == "" || deletedBy[0].value == 0 || deletedBy[0].value == null)
+		{
+			alert("Deleted by field cannot be empty.");
+			return;              
+		}
+		$('#cblist input:checked').each(function() {
+			array.push({UserName :selectBoxProduct[0].value, ReportRightID:this.value, DeletedBy: deletedBy[0].value});
+		});
 		
-    }
-});*/
-
-var UserNameList = new Array();
-var ReportRightIDList = new Array();
-var deletedByList = new Array();
-
-var array = new Array();
-$('#cblist input:checked').each(function() {
-
-		array.push({UserName :selectBoxProduct[0].value, ReportRightID:this.value, DeletedBy: deletedBy[0].value});
-});
-	
-	
-	
-/*	$.post("http://localhost:57034/api/deleteuserreportrightresult",{ob:array},function (data, status) 
-	{ 
-	
-	  alert("the users have been successfully deleted from userreportright list"); } 
-	);  */
-
-
-var myData = { id:100, description:"some text"};
- var myDataArray= new Array();   
- myDataArray.push(myData);   
- $.ajax({
-    dataType: "json",
-    type: "POST",
-    url: "http://localhost:57034/api/deleteuserreportrightresult",
-    contentType: "application/json; charset=utf-8",
-    data: JSON.stringify(array),
-    success: function (data) {
+	var myData = { id:100, description:"some text"};
+	var myDataArray= new Array();   
+	myDataArray.push(myData);   
+	$.ajax({
+		dataType: "json",
+		type: "POST",
+		url: "http://localhost:57034/api/deleteuserreportrightresult",
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify(array),
+		success: function (data) {
         console.log(("OK"));
     },
     error: function (error)
-    { console.log("NOT OK"); }
-})
+		{ console.log("NOT OK"); }
+	})
+	}
 	
-	
-}
- function writeName(){
- var welcomeMsg = $("#welcome");
- var name1 = $("#name1");
- var formContent = $("#entername");
-  
- $.post("http://localhost:50667/api/weather/post",{location:"ankara", degree:name1[0].value},function (data,status)
- {
-  
-	
-	// alert("the users have been successfully deleted from userreportright list"); " + data.degree);
- 
- });
- }
-  
- function getUserReportRightResult(){
-		var welcomeMsg = $("#welcome");
+	function getUserReportRightResult(){
 		var name2 = $("#name2");
 		var formContent = $("#entername");
+		var container = $('#gURRR');
+		var info = "";
+		var notExists = "";
+		container.empty();
 		
-		/*$.ajax({
-			url: "http://localhost:57034/api/GetUserReportRightResult", 
-			data: {UserName:name2[0].value},
-			type: 'get',
-			error: function(XMLHttpRequest, textStatus, errorThrown){
-				alert('status:' + XMLHttpRequest.status + ', status text: ' + XMLHttpRequest.statusText);
-			},
-			success: function(data){}
-		});*/
- 
+		if (name2[0].value == "" || name2[0].value == 0 || name2[0].value == null)
+		{
+			alert("Username field cannot be empty.");
+			return;               
+		}
 		$.get("http://localhost:57034/api/GetUserReportRightResult",{UserName:name2[0].value},function (data)
 		{
-				document.write("The user " + data[0].UserName +" has access to the following reports: ");
-				for(i = 0; i < data.length; i++)
-				{
+			if(data.length == 0)
+			{
+				notExists = "<br><div class='alert alert-danger'>The user does not exists or the user does not have access to any of the reports.</div>";
+				container.append(notExists);
+				return;
+			}
+			info = "<br><div class='alert alert-success'>The user adahan3 has access to the following reports:</div>";
+			container.append(info);
+			var reportNames = "";
+			for(i = 0; i < data.length; i++)
+			{
 					
-					$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[i].ReportRightID},function (data)
-					{	
-						document.write(" " + data.ReportName + " ");
-					});
-				}	
-		});
- }
- 
- function InsertUserReportRightResult(){
- var welcomeMsg = $("#welcome");
- var name3 = $("#name3");
- var inptProduct = $("#inptProduct");
- var name5 = $("#name5");
- var formContent = $("#entername");
- var obj = {username:name3[0].value};
- 
- 
- $.post("http://localhost:57034/api/insertUserRight",{UserName:name3[0].value, ReportRightID:inptProduct[0].value, CreatedBy:name5[0].value},function (data, status)
- {
-	
-	alert("The user has been successfully added to USERREPORTRIGHT list");
- }
- );
- for(k = 0; k < 20; k++)
-				{
- document.write("wtf      " + ReportRight_ReportRightName[k])
- }
- }
- 
- function showAllUserReportRights(){
- 
- 
- var welcomeMsg = $("#welcome");
- var name = $("#name");
- var formContent = $("#entername");
- document.write("<h2> <strong> All of the User Report Rights are shown below. </strong> </h2>");
- 
- $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
-		{
-		
-				
-				for(k = 0; k < data.length; k++)
-				{
-					
-					$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[k].ReportRightID},function (data)
-					{	
-						ReportRight_ReportRightName[k] = data.ReportName;
-						//document.write("awdadawdadadawd" + data.ReportName);
-					});
+				$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[i].ReportRightID},function (data)
+				{	
+					reportNames = "<li class='list-group-item'>" + data.ReportNameValue + "</li>";
+					container.append(reportNames);
+				});
 				}
 			
-			
 		});
+	}
  
- 
-
- $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
- {
-	
-	for(i = 0; i < data.length; i++){
-	
-	$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[i].ReportRightID},function (data)
-					{	
-						ReportRight_ReportRightName[k] = data.ReportName;
-					//	document.write("awdadawdadadawd" + data.ReportName);
-					});
-	
-	
-	
-	ReportRight_UserNameArray[i] = data[i].UserName;
-	ReportRight_ReportRightIDArray[i] = data[i].ReportRightID;
-	
-	//welcomeMsg = data[i].UserName + ":" + data[i].ReportRightID;
-	var node = document.createElement("LI");                 // Create a <li> node
-	var textnode = document.createTextNode("The user " + data[i].UserName +" has a report right with ReportRightID:" + " " + data[i].ReportRightID);         // Create a text node
-	node.appendChild(textnode);                              // Append the text to <li>
-	document.getElementById("textField").appendChild(node);}
-	
-	
- }
- );
- }
- 
- /*function DeleteUserReportRight(){
-		var deleteReportRight = $("#deleteReportRight");
-		$.delete(URL ge
-		 
+	function InsertUserReportRightResult(){
+		var name3 = $("#name3");
+		var inptProduct = $("#inptProduct");
+		var name5 = $("#name5");
+		var formContent = $("#entername");
+		var obj = {username:name3[0].value};
+		if (name3[0].value == "" || name3[0].value == 0 || name3[0].value == null)
+		{
+			alert("Username field cannot be empty.");
+			return;              
 		}
-
- */
- </script>
+		if (name5[0].value == "" || name5[0].value == 0 || name5[0].value == null)
+		{
+			alert("Created by field cannot be empty.");
+			return;              
+		}
+		
+		$.post("http://localhost:57034/api/insertUserRight",{UserName:name3[0].value, ReportRightID:inptProduct[0].value, CreatedBy:name5[0].value},function (data, status)
+		{	
+			alert("The user has been successfully added to USERREPORTRIGHT list");
+		}
+		);
+	}
  
+	function showAllUserReportRights(){
+		$.get("http://localhost:57034/api/GetReportRightResults",function (data)
+		{ 
+			var optionsAsString = "";
+			for(var i = 0; i < data.length; i++) 
+			{
+				reportNameHashMap["" + data[i].Id] = data[i].ReportNameValue;
+			}
+		});
+		var name = $("#name");
+		var formContent = $("#entername");
+
+		$.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
+		{
+			for(i = 0; i < data.length; i++)
+			{
+				ReportRight_UserNameArray[i] = data[i].UserName;
+				ReportRight_ReportRightIDArray[i] = data[i].ReportRightID;
+			}	
+		var uniqueNames = [];
+		$.each(ReportRight_UserNameArray, function(i, el)
+		{
+			if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+		});
+
+		var moptionsAsString = "";
+			for(var m = 0; m < uniqueNames.length; m++)
+			{
+				moptionsAsString += "<option value='" + uniqueNames[m] + "'>" + uniqueNames[m] + "</option>";
+				$( 'select[id="fam"]' ).append( moptionsAsString );
+			}
+	
+		});
+	}
+</script>
 </head>
 <body>
-
-<p>All the current report rights are displayed below.</p>
+<div class="jumbotron">
+	<h1 class="display-4">Arvento Admin Panel User Report Rights</h1>
+		<p class ="lead">All the current report rights are displayed below.</p>
 		<div class="row">
 			<table class="table">
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">Malzeme</th>
+						<th scope="col">Username</th>
 						<th scope="col">ReportRightID</th>
 					</tr>
 				</thead>
@@ -212,54 +163,47 @@ var myData = { id:100, description:"some text"};
 				</tbody>
 			</table>								
 		</div>
+</div>
 
-
-
-
-<div class="col-sm-8 text-left"> 
-
-<section>
-<p>  <script>
-showAllUserReportRights();
-
-</script> </p> 
-
-</section>
+<div class="container"> 
+	<section>
+		<p>  
+		<script> showAllUserReportRights(); </script> 
+		</p> 
+	</section>
 
 		
-					<div id = "textField"/>
-					<form id="get Weather with id">
-				<p>	<strong>Enter Username to see report Right: </strong> </p> <p><input type="text" class ="form-control" id="name2"  placeholder="Username" /></th></p>   
+<div id = "textField"/>
+	<form id="get Weather with id">
+		<p>	<strong>Enter Username to see report Right: </strong> </p> <p><input type="text" class ="form-control" id="name2"  placeholder="Username" /></th></p>   
+			<button onclick ="getUserReportRightResult()" type="button" class="btn btn-success">Show </button>
+			<div id = "gURRR">
 			
-				
-				<button onclick ="getUserReportRightResult()" type="button" class="btn btn-success">Show </button>
-
-						</form>
-						<hr>
-</div>	
-
-	
+			</div>
+	</form>
+	<hr>
+</div>		
 </br>
+
 <form id="get Weather with id">
-<p><strong> Create a new User Report Right: </strong></p> Username: <input type="text" class ="form-control" placeholder="Username" id="name3"/> <form name="test"></p>
- table vardı
-    <tr>
-      <td class='dataleft'>Select Report: </td>
-      <td><select class="form-control" id='inptProduct'></select></td>
-    </tr>
- table vardı
-</form> Created By: <p><input type="text" class ="form-control" placeholder="Created By" id="name5"/></p>
- 
- <button onclick ="InsertUserReportRightResult()" type="button" class="btn btn-primary">Create </button>
+	<p><strong> Create a new User Report Right: </strong></p> Username: <input type="text" class ="form-control" placeholder="Username" id="name3"/> 
+	<form name="test"></p>
+	<div class="form-group">
+		<tr>
+			<td class='dataleft'>Select Report: </td>
+			<td><select class="form-control" id='inptProduct'></select></td>
+		</tr>
+	</div>
+	</form>
+	Created By: <p><input type="text" class ="form-control" placeholder="Created By" id="name5"/></p>
+	<button onclick ="InsertUserReportRightResult()" type="button" class="btn btn-primary">Create </button>
 </form>
 <hr>
-
-table vardı
     <tr>
       <td class='dataleft'> <strong> Remove Report Right from User: </strong> </td>
       <td><select class="form-control" id='deleteUserReportRightProduct'></select></td>
     </tr>
- table vardı
+
   </form> Deleted By:<p> <input type="text" class ="form-control" placeholder="Deleted By" id="name6"/> </p>
 <button onclick ="deleteUserReportRight()" type="button" class="btn btn-danger">Delete </button>  
  <hr>
@@ -273,7 +217,7 @@ table vardı
 
 
 for(var i = 0; i < data.length; i++) {
-    optionsAsString += "<option value='" + data[i].Id + "'>" + data[i].ReportName +"</option>";
+    optionsAsString += "<option value='" + data[i].Id + "'>" + data[i].ReportNameValue +"</option>";
 }
 $( 'select[id="inptProduct"]' ).append( optionsAsString );
 }
@@ -324,9 +268,6 @@ $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 
 <div id="other">
 
-
-
-  Trigger the handler
 </div>
  <script>
 	$('select[id="fam"]').on('change', function() {
@@ -337,11 +278,11 @@ $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 	$.get("http://localhost:57034/api/GetUserReportRightResult",{UserName:this.value},function (data)
 		{
 		
-		var optionsAsString = "";
+		var optionsAsString = "<div class='alert alert-info'> <strong>Info!</strong> Click on the check boxes to remove several report rights simultaneously.</div>";
 
 
 		for(var i = 0; i < data.length; i++) {
-			optionsAsString += "<input type=" +  "checkbox " + "id='UserReportRightDeleteBox' " + "name='UserReportRightDelete'" +  "value=" + data[i].ReportRightID + ">" + data[i].UserName + "<br>";
+			optionsAsString += "<input type=" +  "checkbox " + "id='UserReportRightDeleteBox' " + "name='UserReportRightDelete'" +  "value=" + data[i].ReportRightID + ">" + window.reportNameHashMap[data[i].ReportRightID] + "<br>";
 			}
 			container.append(optionsAsString);
 
@@ -355,20 +296,20 @@ var container = $('#appendHere');
 var listElementsAsString = "";
 $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
 { 
-	var optionsAsString = "";
+	
 	for(var i = 0; i < data.length; i++) {
-		optionsAsString += "<option value='" + data[i].UserName + "'>" + data[i].UserName + "</option>";
-		listElementsAsString += "<tr><th scope='row'>" + i +"</th><td>" + data[i].UserName + "</td><td>" + data[i].ReportRightID + "</td></tr>";
+		
+		listElementsAsString += "<tr><th scope='row'>" + i +"</th><td>" + data[i].UserName + "</td><td>" + window.reportNameHashMap[data[i].ReportRightID] + "</td></tr>";
 }
-$( 'select[id="fam"]' ).append( optionsAsString );
+
 $("table tbody").append(listElementsAsString);
 }
  );
-
 </script>
  
 
- 
+
+
  
  
 </body>

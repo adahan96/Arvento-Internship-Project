@@ -15,6 +15,7 @@ namespace dapperdeneme1.Models
         public int ReportRightID { get; set; }
         public string CreatedBy { get; set; }
 
+
     }
     public class UserReportRight:IDisposable
     {

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<i18n>
+
+  <value key="lReportTrip">    <![CDATA[Trip Report]]> </value>
+  <value key="lReportDriverPerformance">    <![CDATA[Driver Performance Report]]> </value>
+  <value key="lReportBestEcoDrivers">    <![CDATA[Best 10 Drivers(Eco)]]> </value>
+  <value key="lReportCanbusSpecialData">    <![CDATA[Canbus Special Data Report]]> </value>
+  <value key="lReportBestSafeDrivers">    <![CDATA[Best 10 Drivers(Safe)]]> </value>
+  <value key="lReportDriverSafeDriving">    <![CDATA[Safe Driving Report]]> </value>
+  <value key="lReportEcoSafeDriving">    <![CDATA[Economic-Safe Driving Report]]> </value>
+  <value key="lReportRAG">    <![CDATA[RAG Report]]> </value>
+  <value key="lReportRegionBasedOnStandStill">    <![CDATA[Region Based Stand Still Report]]> </value>
+  <value key="lReportSafeDrivingSummary">    <![CDATA[Safe Driving Summary Report]]> </value>
+  <value key="lReportStatisticDoor">    <![CDATA[Statistic Door Report]]> </value>
+  <value key="lReportStatisticMaxMin">    <![CDATA[Maximum Minimum Statistic Report]]> </value>
+  <value key="lReportStatisticRegion">    <![CDATA[Region Statistic Report]]> </value>
+  <value key="lReportStatisticSummary">    <![CDATA[Statistic Summary Report]]> </value>
+  <value key="lReportTemperatureReport">    <![CDATA[Temperature Report]]> </value>
+  <value key="lReportVehicleSafeDriving">    <![CDATA[Vehicle Safe Driving Report]]> </value>
+  <value key="lReportWorstEcoDrivers">    <![CDATA[Worst 10 Drivers(Eco)]]> </value>
+  <value key="lReportWorstSafeDrivers">    <![CDATA[Worst 10 Drivers(Safe)]]> </value>
+  <value key="lReportEcoSafeDrivingAbdiIbrahim">    <![CDATA[Abdi Ibrahim Eco-Safe Driving Report]]> </value>
+  <value key="lReportDistanceCrowFlies">    <![CDATA[Crow Flies Distance Report]]> </value>
+  <value key="lReportStandStillInRegion">    <![CDATA[Region Stand Still Report]]> </value>
+  <value key="lReportOmanRAG">    <![CDATA[RAY RAG Report]]> </value>
+  <value key="lReportTurkcell">    <![CDATA[Region Based Duration Report]]> </value>
+  <value key="lReportSafeDriving">    <![CDATA[Safe Driving Summary Report]]> </value>
+  <value key="lReportPowerLevel">    <![CDATA[Power Level Report]]> </value>
+  <value key="lReportBusinessInOutHour">    <![CDATA[Business In and Out Report]]> </value>
+  <value key="DEFINESEC">    <![CDATA[DEFINESEC]]> </value>
+  <value key="lReportDeviceWorkingEnerjiSA">    <![CDATA[Special Vehicle Working Report]]> </value>
+  <value key="lReportIdlingOverTime">    <![CDATA[Idling Over Time Report]]> </value>
+  <value key="lReportSeatBeltAlarm">    <![CDATA[Seat Belt Taken/Moved Alarm Report]]> </value>
+  <value key="lReportEngineDuration">    <![CDATA[Engine Duration Report]]> </value>
+  <value key="lReportDSIWorkingHour">    <![CDATA[Vehicle Total Working Hour Report]]> </value>
+  <value key="lReportDSICountryCompare">    <![CDATA[DSI Country Compare Report]]> </value>
+  <value key="lReportTemperatureTrend">    <![CDATA[Temperature Trend Report]]> </value>
+  <value key="lReportDoorOpenClose">    <![CDATA[Lid Open/Close Report]]> </value>
+  <value key="lReportSeatBelt">    <![CDATA[Seat Belt Alarm Report]]> </value>
+  <value key="lReportFingerPrint">    <![CDATA[Finger Print Report]]> </value>
+  <value key="lReportTaskAlarm">    <![CDATA[Task Alarm Report]]> </value>
+  <value key="lReportMobileye">    <![CDATA[Mobileye Advanced Driver Support System Report]]> </value>
+  <value key="lReportSpecialIgnBased">    <![CDATA[Driver Log Report]]> </value>
+
+  
+  
+  
+
+</i18n>
