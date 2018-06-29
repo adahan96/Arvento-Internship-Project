@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<i18n>
+
+  <value key="lReportTrip">    <![CDATA[Seyahat Raporu]]> </value>
+  <value key="lReportDriverPerformance">    <![CDATA[Sürücü Performansı Raporu]]> </value>
+  <value key="lReportBestEcoDrivers">    <![CDATA[En iyi 10 Sürücü(Eco)]]> </value>
+  <value key="lReportCanbusSpecialData">    <![CDATA[Canbus Özel Veri Raporu]]> </value>
+  <value key="lReportBestSafeDrivers">    <![CDATA[En iyi 10 Sürücü(Safe)]]> </value>
+  <value key="lReportDriverSafeDriving">    <![CDATA[Güvenli Sürüş Raporu]]> </value>
+  <value key="lReportEcoSafeDriving">    <![CDATA[Ekonomik-Güvenli Sürüş Raporu]]> </value>
+  <value key="lReportRAG">    <![CDATA[RAG Raporu]]> </value>
+  <value key="lReportRegionBasedOnStandStill">    <![CDATA[Bölge Bazlı Hareketsiz Kalma Raporu]]> </value>
+  <value key="lReportSafeDrivingSummary">    <![CDATA[Güvenli Sürüş Özet Raporu]]> </value>
+  <value key="lReportStatisticDoor">    <![CDATA[Kapı İstatistik Raporu]]> </value>
+  <value key="lReportStatisticMaxMin">    <![CDATA[Maksimum Minimum İstatistik Raporu]]> </value>
+  <value key="lReportStatisticRegion">    <![CDATA[Bölge İstatistik Raporu]]> </value>
+  <value key="lReportStatisticSummary">    <![CDATA[İstatistik Özet Raporu]]> </value>
+  <value key="lReportTemperatureReport">    <![CDATA[Sıcaklık Raporu]]> </value>
+  <value key="lReportVehicleSafeDriving">    <![CDATA[Araç Güvenli Sürüş Raporu]]> </value>
+  <value key="lReportWorstEcoDrivers">    <![CDATA[En kötü 10 sürücü(Eco)]]> </value>
+  <value key="lReportWorstSafeDrivers">    <![CDATA[En kötü 10 sürücü(Safe)]]> </value>
+  <value key="lReportEcoSafeDrivingAbdiIbrahim">    <![CDATA[Abdi Ibrahim Eco-Safe Sürücü Raporu]]> </value>
+  <value key="lReportDistanceCrowFlies">    <![CDATA[Crow Flies Sürücü Raporu]]> </value>
+  <value key="lReportStandStillInRegion">    <![CDATA[Bölge Hareketsiz Kalma Raporu]]> </value>
+  <value key="lReportOmanRAG">    <![CDATA[RAY RAG Raporu]]> </value>
+  <value key="lReportTurkcell">    <![CDATA[Bölge Bazlı Durma Raporu]]> </value>
+  <value key="lReportSafeDriving">    <![CDATA[GÜvenli Sürüş Özet Raporu]]> </value>
+  <value key="lReportPowerLevel">    <![CDATA[Güç Seviyesi Raporu]]> </value>
+  <value key="lReportBusinessInOutHour">    <![CDATA[İş Giriş-Çıkış Raporu]]> </value>
+  <value key="DEFINESEC">    <![CDATA[DEFINESEC]]> </value>
+  <value key="lReportDeviceWorkingEnerjiSA">    <![CDATA[Özel Araç Çalışma Raporu]]> </value>
+  <value key="lReportIdlingOverTime">    <![CDATA[Boşta Çalışma Mesai Raporu]]> </value>
+  <value key="lReportSeatBeltAlarm">    <![CDATA[Emniyet Kemeri Takıldı/Çıkarıldı Alarm Raporu]]> </value>
+  <value key="lReportEngineDuration">    <![CDATA[Motor Süre Raporu]]> </value>
+  <value key="lReportDSIWorkingHour">    <![CDATA[Araç Toplam Çalışma Saati Raporu]]> </value>
+  <value key="lReportDSICountryCompare">    <![CDATA[DSI Ülke Karşılaştırma Raporu]]> </value>
+  <value key="lReportTemperatureTrend">    <![CDATA[Sıcaklık Eğilim Raporu]]> </value>
+  <value key="lReportDoorOpenClose">    <![CDATA[Lid Açma/Kapama Raporu]]> </value>
+  <value key="lReportSeatBelt">    <![CDATA[Emniyet Kemeri Alarm Raporu]]> </value>
+  <value key="lReportFingerPrint">    <![CDATA[Parmak İzi Raporu]]> </value>
+  <value key="lReportTaskAlarm">    <![CDATA[Görev Alarm Raporu]]> </value>
+  <value key="lReportMobileye">    <![CDATA[Mobileye Gelişmiş Sürücü Destek Sistemi Raporu]]> </value>
+  <value key="lReportSpecialIgnBased">    <![CDATA[Sürücü Günlüğü Raporu]]> </value>
+
+
+
+
+
+</i18n>

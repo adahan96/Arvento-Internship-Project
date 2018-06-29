@@ -15,6 +15,7 @@ namespace dapperdeneme1.Models
         public string ReportName { get; set; }
         public string CreatedBy { get; set; }
         public string ReportNameValue { get; set; }
+        public string ReportNameValueTurkish { get; set; }
 
     }
     public class ReportRight
@@ -62,13 +63,31 @@ namespace dapperdeneme1.Models
                     mappingList.Add(item.Key, item.Value);
 
                 }
-              //  return mappingList;
+
+
+                string turkishReportNamesXML = HttpContext.Current.Server.MapPath("../Constants/turkishReportNamesXML.xml");
+                //HttpContext.Current.Server.MapPath("/dapperdeneme1/englishReportNamesXML.xml");
+                var ydoc = XDocument.Load(turkishReportNamesXML);
+                var map1 = (from c in ydoc.Root.Elements()
+                           select new { Key = c.FirstAttribute.Value, Value = c.Value });
+                Dictionary<string, string> mappingList1 = new Dictionary<string, string>();
+                foreach (var item in map1)
+
+                {
+                    mappingList1.Add(item.Key, item.Value);
+
+                }
+                //  return mappingList;
 
 
                 List<ReportRightResult> result = cn.Query<ReportRightResult>(strSql).ToList();
                 for(int i = 0; i< result.Count; i++)
                 {
                     result[i].ReportNameValue = mappingList[result[i].ReportName];
+                }
+                for (int i = 0; i < result.Count; i++)
+                {
+                    result[i].ReportNameValueTurkish = mappingList1[result[i].ReportName];
                 }
                 return result;
 
@@ -101,10 +120,26 @@ namespace dapperdeneme1.Models
 
                 }
 
+
+                string turkishReportNamesXML = HttpContext.Current.Server.MapPath("../Constants/turkishReportNamesXML.xml");
+                //HttpContext.Current.Server.MapPath("/dapperdeneme1/englishReportNamesXML.xml");
+                var ydoc = XDocument.Load(turkishReportNamesXML);
+                var map1 = (from c in ydoc.Root.Elements()
+                            select new { Key = c.FirstAttribute.Value, Value = c.Value });
+                Dictionary<string, string> mappingList1 = new Dictionary<string, string>();
+                foreach (var item in map1)
+
+                {
+                    mappingList1.Add(item.Key, item.Value);
+
+                }
+
+
                 ReportRightResult result = cn.Query<ReportRightResult>(strSql,parameters).FirstOrDefault();
                
                     result.ReportNameValue = mappingList[result.ReportName];
-                
+                    result.ReportNameValueTurkish = mappingList1[result.ReportName];
+
                 return result;
               
 

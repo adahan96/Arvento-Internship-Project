@@ -9,11 +9,13 @@
 <meta charset="utf-8"/>
 <title>Ornek</title>
 <script src="jquery-3.3.1.min.js"></script>
+
 <script type="text/javascript">
     var reportNameHashMap = {};
 	var ReportRight_UserNameArray = [];
 	var ReportRight_ReportRightIDArray = new Array();
-    var ReportRight_ReportRightName = new Array();
+     var ReportRight_ReportRightName = new Array();
+	var languageOption = localStorage.getItem("language");
 	
 	function deleteUserReportRight(){
 	    var selectBoxProduct = $("#fam")
@@ -25,7 +27,13 @@
 		var array = new Array();
 		if (deletedBy[0].value == "" || deletedBy[0].value == 0 || deletedBy[0].value == null)
 		{
-			alert("Deleted by field cannot be empty.");
+			
+			if(languageOption == 1){
+			alert("Deleted By field cannot be empty.");
+			}
+			else{
+			alert("Tarafından silindi kısmı boş kalamaz.");
+			}
 			return;              
 		}
 		$('#cblist input:checked').each(function() {
@@ -59,14 +67,26 @@
 		
 		if (name2[0].value == "" || name2[0].value == 0 || name2[0].value == null)
 		{
+			if(languageOption == 1){
 			alert("Username field cannot be empty.");
+			}
+			else{
+			alert("Kullanıcı adı kısmı boş kalamaz.");
+			}
 			return;               
 		}
 		$.get("http://localhost:57034/api/GetUserReportRightResult",{UserName:name2[0].value},function (data)
 		{
 			if(data.length == 0)
 			{
+				if(languageOption == 1)
+				{
 				notExists = "<br><div class='alert alert-danger'>The user does not exists or the user does not have access to any of the reports.</div>";
+				}
+				else
+				{
+				notExists = "<br><div class='alert alert-danger'>Böyle bir kullanıcı yok veya kullanıcının raporlara erişimi yok.</div>";
+				}
 				container.append(notExists);
 				return;
 			}
@@ -77,8 +97,16 @@
 			{
 					
 				$.get("http://localhost:57034/api/GetReportRightResult",{ReportRightID:data[i].ReportRightID},function (data)
-				{	
+				{
+					if(languageOption == 1)
+					{
 					reportNames = "<li class='list-group-item'>" + data.ReportNameValue + "</li>";
+					}
+					else
+					{
+					reportNames = "<li class='list-group-item'>" + data.ReportNameValueTurkish + "</li>";
+					}
+					
 					container.append(reportNames);
 				});
 				}
@@ -111,12 +139,32 @@
 	}
  
 	function showAllUserReportRights(){
+	var optionsAsStringL = "";
+		$( 'select[id="languageSelector"]' ).empty();
+		if(localStorage.getItem("language") == 2)
+		{
+			optionsAsStringL = "<option value=\"2\" data-content='<span class=\"flag-icon flag-icon-tr\"></span> Turkish'>Turkish</option><option value=\"1\" data-content='<span class=\"flag-icon flag-icon-us\"></span> English'>English</option>";			
+		}						                                                                                                          
+		else{
+			optionsAsStringL = "<option value=\"1\" data-content='<span class=\"flag-icon flag-icon-us\"></span> English'>English</option><option value=\"2\"  data-content='<span class=\"flag-icon flag-icon-tr\"></span> Turkish'>Turkish</option>";			
+		
+		}
+		$( 'select[id="languageSelector"]' ).append(optionsAsStringL);
+		
+		
 		$.get("http://localhost:57034/api/GetReportRightResults",function (data)
 		{ 
 			var optionsAsString = "";
 			for(var i = 0; i < data.length; i++) 
 			{
-				reportNameHashMap["" + data[i].Id] = data[i].ReportNameValue;
+				if(languageOption == 1)
+				{
+					reportNameHashMap["" + data[i].Id] = data[i].ReportNameValue;
+				}
+				else
+				{
+					reportNameHashMap["" + data[i].Id] = data[i].ReportNameValueTurkish;
+				}
 			}
 		});
 		var name = $("#name");
@@ -143,10 +191,44 @@
 			}
 	
 		});
+	} 
+	function switchLanguage()
+	{
+		//var optionsAsString = "<option value='1' data-content='<span class='flag-icon flag-icon-us'></span> English'>English</option><option value='2'  data-content='<span class='flag-icon flag-icon-tr'></span> Turkish'>Turkish</option>";			
+		var english = 1;
+		var turkish = 2;
+		var languageOptionval;
+		var languageSelector = $("#languageSelector");
+		if(languageSelector[0].value == 1){
+		localStorage.setItem("language", english);
+		}
+		else
+		{
+		localStorage.setItem("language", turkish);
+		}
+		
 	}
 </script>
+
 </head>
+
 <body>
+
+
+ <select id="languageSelector" class="selectpicker" data-width="fit" onchange="location.reload()"> <!--onchange="location.reload()"-->
+    
+</select>
+<script>
+	$('select[id="languageSelector"]').on('change', function() {
+ 
+	switchLanguage();
+	
+	
+}) 
+
+
+</script>
+
 <div class="jumbotron">
 	<h1 class="display-4">Arvento Admin Panel User Report Rights</h1>
 		<p class ="lead">All the current report rights are displayed below.</p>
@@ -165,6 +247,7 @@
 		</div>
 </div>
 
+
 <div class="container"> 
 	<section>
 		<p>  
@@ -172,7 +255,15 @@
 		</p> 
 	</section>
 
-		
+<select class="form-control" id="selectMe">
+  <option value="option1">Display Report Rights</option>
+  <option value="option2">Create New Report Right</option>
+  <option value="option3">Remove Report Right</option>
+  <option value="option4">Remove Report Rights</option>
+</select>
+<hr>
+<div id="option1" class="group">	<!--SELECT OPTION-->
+	
 <div id = "textField"/>
 	<form id="get Weather with id">
 		<p>	<strong>Enter Username to see report Right: </strong> </p> <p><input type="text" class ="form-control" id="name2"  placeholder="Username" /></th></p>   
@@ -185,6 +276,10 @@
 </div>		
 </br>
 
+</div>								<!--SELECT OPTION-->
+
+
+<div id="option2" class="group">         <!--SELECT OPTION-->
 <form id="get Weather with id">
 	<p><strong> Create a new User Report Right: </strong></p> Username: <input type="text" class ="form-control" placeholder="Username" id="name3"/> 
 	<form name="test"></p>
@@ -199,6 +294,11 @@
 	<button onclick ="InsertUserReportRightResult()" type="button" class="btn btn-primary">Create </button>
 </form>
 <hr>
+</div>								<!--SELECT OPTION-->
+
+
+<div id="option3" class="group">					<!--SELECT OPTION-->
+
     <tr>
       <td class='dataleft'> <strong> Remove Report Right from User: </strong> </td>
       <td><select class="form-control" id='deleteUserReportRightProduct'></select></td>
@@ -208,6 +308,8 @@
 <button onclick ="deleteUserReportRight()" type="button" class="btn btn-danger">Delete </button>  
  <hr>
   
+  
+  </div>										<!--SELECT OPTION-->
 
 
 
@@ -217,7 +319,14 @@
 
 
 for(var i = 0; i < data.length; i++) {
+	if(languageOption == 1)
+	{
     optionsAsString += "<option value='" + data[i].Id + "'>" + data[i].ReportNameValue +"</option>";
+	}
+	else
+	{
+	optionsAsString += "<option value='" + data[i].Id + "'>" + data[i].ReportNameValueTurkish +"</option>";
+	}
 }
 $( 'select[id="inptProduct"]' ).append( optionsAsString );
 }
@@ -241,7 +350,8 @@ $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 }
  );
  </script>
- 
+
+<div id="option4" class="group">					<!--SELECT OPTION--> 
  
  
  <form>
@@ -269,6 +379,9 @@ $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 <div id="other">
 
 </div>
+
+
+</div>										<!--SELECT OPTION-->
  <script>
 	$('select[id="fam"]').on('change', function() {
  
@@ -306,7 +419,16 @@ $("table tbody").append(listElementsAsString);
 }
  );
 </script>
- 
+<script>
+$(document).ready(function () {
+  $('.group').hide();
+  $('#option1').show();
+  $('#selectMe').change(function () {
+    $('.group').hide();
+    $('#'+$(this).val()).show();
+  })
+});
+</script> 
 
 
 
