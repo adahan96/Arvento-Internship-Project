@@ -20,7 +20,7 @@
 	function deleteUserReportRight(){
 	    var selectBoxProduct = $("#fam")
 		var deleteProduct = $("#UserReportRightDeleteBox");
-		var deletedBy = $("#name6");
+		var deletedBy = $("#name7");
 		var UserNameList = new Array();
 		var ReportRightIDList = new Array();
 		var deletedByList = new Array();
@@ -56,6 +56,75 @@
 		{ console.log("NOT OK"); }
 	})
 	}
+	
+	function deleteSingleUserReportRight(){
+		
+		var deleteProduct = $("#deleteUserReportRightProduct");
+		var deletedBy = $("#name6");
+		var UserNameList = new Array();
+		var ReportRightIDList = new Array();
+		var deletedByList = new Array();
+		var array2 = new Array();
+		if (deletedBy[0].value == "" || deletedBy[0].value == 0 || deletedBy[0].value == null)
+		{
+			
+			if(languageOption == 1){
+			alert("Deleted By field cannot be empty.");
+			}
+			else{
+			alert("Tarafından silindi kısmı boş kalamaz.");
+			}
+			return;              
+		}
+			
+			array2.push({UserName :$( "#deleteUserReportRightProduct option:selected" ).text(), ReportRightID:deleteProduct[0].value, DeletedBy: deletedBy[0].value});
+		
+		
+	var myData = { id:100, description:"some text"};
+	var myDataArray= new Array();   
+	myDataArray.push(myData);   
+	$.ajax({
+		dataType: "json",
+		type: "POST",
+		url: "http://localhost:57034/api/deleteuserreportrightresult",
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify(array2),
+		success: function (data) {
+        console.log(("OK"));
+    },
+    error: function (error)
+		{ console.log("NOT OK"); }
+	})
+	}
+	function deleteSingleUserReportRight(UserNameParam, ReportRightIDParam){
+		
+		
+		var UserNameList = new Array();
+		var ReportRightIDList = new Array();
+		var deletedByList = new Array();
+		var array2 = new Array();
+		
+			
+			array2.push({UserName :UserNameParam, ReportRightID:ReportRightIDParam, DeletedBy: "SYSTEM"});
+		
+		
+	var myData = { id:100, description:"some text"};
+	var myDataArray= new Array();   
+	myDataArray.push(myData);   
+	$.ajax({
+		dataType: "json",
+		type: "POST",
+		url: "http://localhost:57034/api/deleteuserreportrightresult",
+		contentType: "application/json; charset=utf-8",
+		data: JSON.stringify(array2),
+		success: function (data) {
+        console.log(("OK"));
+    },
+    error: function (error)
+		{ console.log("NOT OK"); }
+	})
+	}
+
 	
 	function getUserReportRightResult(){
 		var name2 = $("#name2");
@@ -241,8 +310,10 @@
 						<th scope="col">ReportRightID</th>
 					</tr>
 				</thead>
+				 
 				<tbody>
 				</tbody>
+				
 			</table>								
 		</div>
 </div>
@@ -305,7 +376,7 @@
     </tr>
 
   </form> Deleted By:<p> <input type="text" class ="form-control" placeholder="Deleted By" id="name6"/> </p>
-<button onclick ="deleteUserReportRight()" type="button" class="btn btn-danger">Delete </button>  
+<button onclick ="deleteSingleUserReportRight()" type="button" class="btn btn-danger">Delete </button>  
  <hr>
   
   
@@ -344,7 +415,7 @@ $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
 
 
 for(var i = 0; i < data.length; i++) {
-    optionsAsString += "<option value='" + {id:data[i].ReportRightID,name:data[i].UserName} + "'>" + data[i].UserName + "  id:" + data[i].ReportRightID +"</option>";
+    optionsAsString += "<option value='" + data[i].ReportRightID + "'>" + data[i].UserName +"</option>";
 }
 $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 }
@@ -372,7 +443,7 @@ $( 'select[id="deleteUserReportRightProduct"]' ).append( optionsAsString );
 
 
 </div>
-
+Deleted By:<p> <input type="text" class ="form-control" placeholder="Deleted By" id="name7"/> </p>
 <p><button onclick ="deleteUserReportRight()" type="button" class="btn btn-danger">Delete </button></p>
 </form>
 
@@ -412,7 +483,7 @@ $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
 	
 	for(var i = 0; i < data.length; i++) {
 		
-		listElementsAsString += "<tr><th scope='row'>" + i +"</th><td>" + data[i].UserName + "</td><td>" + window.reportNameHashMap[data[i].ReportRightID] + "</td></tr>";
+		listElementsAsString += "<tr><th scope='row'>" + i +"</th><td>" + data[i].UserName + "</td><td>" + window.reportNameHashMap[data[i].ReportRightID] + "</td><td> <button onclick ='deleteSingleUserReportRight(\"" + data[i].UserName + "\", " + data[i].ReportRightID + ")' type='button' class='btn btn-danger'>Remove </button></td></tr>";
 }
 
 $("table tbody").append(listElementsAsString);
