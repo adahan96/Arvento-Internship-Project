@@ -312,6 +312,7 @@
 				</thead>
 				 
 				<tbody>
+				<button onclick ="toggleTableContents()" type="button" class="btn btn-success" id="toggleButton">Show Table </button>
 				</tbody>
 				
 			</table>								
@@ -475,7 +476,10 @@ Deleted By:<p> <input type="text" class ="form-control" placeholder="Deleted By"
 }) 
 </script>
 
-<script>  
+<script> 
+var status = "less";
+ function toggleTableContents(){
+ if(status == "less"){
 var container = $('#appendHere');
 var listElementsAsString = "";
 $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
@@ -489,6 +493,17 @@ $.get("http://localhost:57034/api/GetUserReportRightResults",function (data)
 $("table tbody").append(listElementsAsString);
 }
  );
+ $("#toggleButton").text('Hide Table');
+ status = "more";
+ }
+else if (status == "more") {
+	
+	$("table tbody").empty();
+	
+	status = "less";
+	$("#toggleButton").text('Show Table');
+ }
+ }
 </script>
 <script>
 $(document).ready(function () {
